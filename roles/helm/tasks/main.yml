@@ -16,7 +16,7 @@
   block:
     - name: "Get Helm installer"
       get_url:
-        url: https://raw.githubusercontent.com/helm/helm/master/scripts/get
+        url: https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
         dest: "{{ tmp_dir }}/get_helm.sh"
         mode: 0755
 
@@ -36,7 +36,7 @@
   tags: helm
 
 - name: "RBAC configuration"
-  shell: "kubectl apply -f {{ tmp_dir }}/rbac-config.yml"
+  shell: "kubectl --kubeconfig={{ kubeadmin_config }} apply -f {{ tmp_dir }}/rbac-config.yml"
   tags: helm
 
 - name: "Init Helm"

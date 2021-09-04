@@ -1,9 +1,9 @@
 ---
-- hosts: kube-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: docker, tags: docker }
+# - hosts: kube-cluster
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: docker, tags: docker }
 
 - hosts: master
   gather_facts: yes
@@ -21,6 +21,8 @@
 - hosts: master
   gather_facts: yes
   become: yes
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
   tasks:
     - name: "Helm role"
       include_role:

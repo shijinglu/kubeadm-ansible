@@ -18,6 +18,11 @@
       when: network == "flannel"
       ignore_errors: True
 
+    - name: Delete /etc/kubernetes/network/
+      file:
+        path: "{{ network_dir }}"
+        state: absent
+
     - name: Delete tunl0 interface
       command: modprobe -r ipip
       when: network == "calico"
@@ -48,4 +53,3 @@
       when: find_blackhole.stdout != ''
       shell: "ip route del {{ find_blackhole.stdout }}"
       ignore_errors: True
-

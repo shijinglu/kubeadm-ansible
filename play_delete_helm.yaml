@@ -1,0 +1,19 @@
+---
+
+- hosts: master
+  gather_facts: yes
+  become: yes
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  tasks:
+    - name: Helm Reset, stop tiller service and delete tiller deployment
+      shell: "helm reset"
+      tags:
+        - delete_helm
+
+    - name: delete helm binary
+      file: 
+        path: "/usr/local/bin/helm"
+        state: absent
+      tags:
+        - delete_helm
