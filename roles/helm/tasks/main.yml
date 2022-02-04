@@ -39,8 +39,12 @@
   shell: "kubectl --kubeconfig={{ kubeadmin_config }} apply -f {{ tmp_dir }}/rbac-config.yml"
   tags: helm
 
-- name: "Init Helm"
-  shell: "helm init --service-account tiller"
+# Helm is removed now: https://stackoverflow.com/questions/59261340/helm-init-has-been-removed-in-version-3
+# - name: "Init Helm"
+#   shell: "helm init --service-account tiller"
+#   tags: helm
+- name: "Add Helm Repo Stable"
+  shell: "helm repo add stable https://charts.helm.sh/stable"
   tags: helm
 
 - name: "Update Helm repo"

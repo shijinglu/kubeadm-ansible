@@ -1,5 +1,16 @@
 
 
+# Quick Start
+
+```
+# modify all.yml:
+# - network_interfaces
+# - kube_version
+
+$ ansible-playbook --ask-become-pass -i hosts.ini site.yaml
+$ ansible-playbook --ask-become-pass -i hosts.ini reset-site.yaml
+```
+
 
 # heterogeneous network interface
 
@@ -14,7 +25,7 @@ kubectrl cluster-info showed the control panel URL is https://192.168.1.190:6443
 
 ```shell
 $ kubectl cluster-info
-# Kubernetes control plane is running at https://192.168.1.190:6443
+# Kubernetes control plane is running at https://1  92.168.1.190:6443
 # CoreDNS is running at https://192.168.1.190:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 ```
 
@@ -50,7 +61,7 @@ $ helm install my-release kubernetes-dashboard/kubernetes-dashboard
 # ...
 # 
 # Get the Kubernetes Dashboard URL by running:
-# export POD_NAME=$(kubectl get pods -n default -l "app.kubernetes.io/name=kubernetes-dashboard,app.kubernetes.io/instance=my-release" -o jsonpath="{.# items[0].metadata.name}")
+# export POD_NAME=$(kubectl get pods -n default -l "app.kubernetes.io/name=kubernetes-dashboard,app.kubernetes.io/instance=my-release" -o jsonpath="{.items[0].metadata.name}")
 # echo https://127.0.0.1:8443/
 # kubectl -n default port-forward $POD_NAME 8443:8443
 ```
@@ -109,3 +120,8 @@ should have:
 ```
 
 
+## Install Postgresql 
+
+```
+$ helm install bitnami/postgresql --generate-name
+```

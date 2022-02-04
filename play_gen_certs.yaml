@@ -1,0 +1,25 @@
+---
+
+- name: generate local signed certificates
+  hosts: master
+  vars:
+    CA_DIR: /root/k8scerts
+  gather_facts: yes
+  become: yes
+  environment:
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  tasks:
+    - name: Create certs directory for storing CA stuff
+      file:
+          path: '{{ CA_DIR }}'
+          state: directory
+      tags:
+          - certficates
+          - ca
+
+    - name: Generate CA private key
+      openssl_privatekey:
+        path: '{{ CA_DIR }}/ca-key.pem'
+      tags:
+        - certficates
+        - ca

@@ -53,3 +53,14 @@
       when: find_blackhole.stdout != ''
       shell: "ip route del {{ find_blackhole.stdout }}"
       ignore_errors: True
+
+    - name: Purge Docker
+      when: ansible_facts['os_family'] == "RedHat"
+      shell: |
+        apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli
+        apt-get autoremove -y --purge docker-engine docker docker.io docker-ce  
+        rm -rvf /var/lib/docker /etc/docker
+        rm -rvf /etc/apparmor.d/docker
+        groupdel docker
+        rm -rvf /var/run/docker.sock
+        rm -rvf /usr/local/bin/docker-compose
